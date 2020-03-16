@@ -1,3 +1,5 @@
-# Index
+# GraphQLハンズオン
 
-![logo](/images/logo.png)
+## 今日のゴール
+
+- GraphQLで公開されたAPIを叩いてアプリケーションを作れること
