@@ -1,0 +1,9 @@
+{
+  "name": "vupress_template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "vuepress dev docs",
+    "build": "vuepress build docs"
+  }
+}
