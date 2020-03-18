@@ -1,7 +1,12 @@
-# Page2
+# APIを叩いてみよう！
 
-## Topic1
+## 概要
+
+- GraphiQLの使い方
+- Docでどんなparamがあるかチェック
+- queryを叩く
 
 ## Topic2
 
 ## Topic3
+
