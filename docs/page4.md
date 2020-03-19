@@ -26,13 +26,13 @@ yarn install
 ```
 
 - 起動します
-    - [http://localhost:5000](http://localhost:5000)で起動します
+    - [http://localhost:4000](http://localhost:4000)で起動します
 
 ```sh
 yarn watch
 ```
 
-- [http://localhost:5000](http://localhost:5000)にアクセスしてPlaygroundが表示されればOKです
+- [http://localhost:4000](http://localhost:4000)にアクセスしてPlaygroundが表示されればOKです
     - Docを見たりQueryを実行したりしてみましょう
     - 実行できるQueryは`pokemons`と`pokemon`の2つです
 
@@ -78,7 +78,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 export default new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: 'http://localhost:5000/graphql',
+    uri: 'http://localhost:4000/graphql',
   }),
 });
 ```
@@ -218,7 +218,7 @@ import { gql } from '@apollo/client';
 export const GET_ALL_POKEMON = gql`
   query Pokemons {
     pokemons(first: 151) {
-      number
+      id
       name
       image
     }
@@ -241,10 +241,10 @@ function PokemonList() {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
-  return data.pokemons.map(({ number, name, image }) => (
-    <button key={number}>
+  return data.pokemons.map(({ id, name, image }) => (
+    <button key={id}>
       <p>
-        No.{number} {name}
+        No.{id} {name}
       </p>
       <img src={image} alt={name} height="150" />
     </button>
@@ -315,17 +315,17 @@ import { gql } from '@apollo/client';
 export const GET_ALL_POKEMON = gql`
   query Pokemons {
     pokemons(first: 151) {
-      number
+      id
       name
       image
     }
   }
 `;
 
-export const GET_POKEMON_BY_NUMBER = gql`
-  query Pokemon($number: String!) {
-    pokemon(number: $number) {
-      number
+export const GET_POKEMON_BY_ID = gql`
+  query Pokemon($id: String!) {
+    pokemon(id: $id) {
+      id
       name
       classification
       types
@@ -338,7 +338,7 @@ export const GET_POKEMON_BY_NUMBER = gql`
         maximum
       }
       evolutions {
-        number
+        id
         name
       }
       image
@@ -353,7 +353,7 @@ export const GET_POKEMON_BY_NUMBER = gql`
 import React from 'react';
 import { useQuery } from '@apollo/client';
 
-import { GET_POKEMON_BY_NUMBER } from '../graphql/schema';
+import { GET_POKEMON_BY_ID } from '../graphql/schema';
 import { useParams, Link } from 'react-router-dom';
 
 function PokemonDetail() {
@@ -361,8 +361,8 @@ function PokemonDetail() {
   const { id } = useParams();
   // Queryを実行する
   // 引数はvariablesに指定する
-  const { loading, error, data } = useQuery(GET_POKEMON_BY_NUMBER, {
-    variables: { number: id },
+  const { loading, error, data } = useQuery(GET_POKEMON_BY_ID, {
+    variables: { id },
   });
   console.log({ loading, error, data });
 
@@ -373,7 +373,7 @@ function PokemonDetail() {
     <div>
       <dl>
         <dt>No.</dt>
-        <dd>{data.pokemon.number}</dd>
+        <dd>{data.pokemon.id}</dd>
         <dt>名前</dt>
         <dd>{data.pokemon.name}</dd>
         <dt>種別</dt>
@@ -393,7 +393,7 @@ function PokemonDetail() {
           {data.pokemon.evolutions
             ? data.pokemon.evolutions.map(poke => (
                 <>
-                  <Link to={`/pokemons/${poke.number}`} key={poke.number}>
+                  <Link to={`/pokemons/${poke.id}`} key={poke.id}>
                     {poke.name}
                   </Link>
                   <br />
@@ -430,11 +430,11 @@ function PokemonList() {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
-  return data.pokemons.map(({ number, name, image }) => (
+  return data.pokemons.map(({ id, name, image }) => (
     //クリックしたら詳細ページに遷移する処理を追加
-    <button key={number} onClick={() => history.push(`/pokemons/${number}`)}>
+    <button key={id} onClick={() => history.push(`/pokemons/${id}`)}>
       <p>
-        No.{number} {name}
+        No.{id} {name}
       </p>
       <img src={image} alt={name} height="150" />
     </button>
