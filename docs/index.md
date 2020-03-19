@@ -9,8 +9,8 @@
 
 - GraphQLについて
     - 公式の資料が充実してる
-    - https://graphql.org/learn/
-    - https://www.howtographql.com/
+    - [https://graphql.org/learn/](https://graphql.org/learn/)
+    - [https://www.howtographql.com/](https://www.howtographql.com/)
 - Apolloについて
     - こっちも公式の資料が充実してる
-    - https://www.apollographql.com/docs/tutorial/introduction/
+    - [https://www.apollographql.com/docs/tutorial/introduction/](https://www.apollographql.com/docs/tutorial/introduction/)
