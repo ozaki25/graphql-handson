@@ -6,8 +6,9 @@
 
 - HelloWorldを動かしてApolloServerを動かしかたを知れること
 - 野球チームサンプルを動かしてApolloServerの登場人物の整理ができていること
+- Playgroundの操作のしかたに慣れること
 
-## HelloWorld的なところまで
+## HelloWorld
 
 ### セットアップ
 
@@ -93,7 +94,7 @@ node index.js
 ![Playground](/images/3-1.png)
 
 - Docsを確認してみましょう
-    - 画面右のDocsを押すとどんなQueryが実行できるのか一覧が表示されます
+    - 画面右のDocsを押すとどんなQueryを実行できるのか一覧が表示されます
     - Queryをクリックすると詳細な型の情報も確認できます
 ![docs](/images/3-2.png)
 
@@ -111,11 +112,12 @@ node index.js
     }
     ```
     ![query](/images/3-3.png)
-- こうし流れでPlaygroundで動作確認しつつGraphQLサーバを開発していくとよいです
+- このような流れでPlaygroundで動作確認しつつGraphQLサーバを開発していくとよいです
 
-## 選手と球団を返すGraphQLサーバを作ってみる
+## 野球チームAPI
 
 - 次はもう少し複雑なものを作ってみます
+- 選手と球団を返すGraphQLサーバを作ってみます
 
 ### モックデータのセットアップ
 
@@ -331,7 +333,7 @@ server.listen().then(({ url }) => {
 
 ### 動作確認
 
-- サーバを再度起動して[http://localhost:4000/](http://localhost:4000/)にアクセスしPlaygroundで動作確認してみます
+- サーバを再起動して[http://localhost:4000/](http://localhost:4000/)にアクセスしPlaygroundで動作確認してみます
 
 ```sh
 node index.js

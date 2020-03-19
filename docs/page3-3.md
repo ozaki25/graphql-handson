@@ -3,6 +3,11 @@
 - ApolloClientを使ってGraphQLクライアントを作ります
 - 今回はReactを使ったSPAで前節で作成したGraphQLサーバにアクセスします
 
+## ゴール
+
+- ApolloClientのセットアップの仕方を知る
+- useQuery/useMutationの使い方や動きを知る
+
 ## セットアップ
 
 - Reactアプリの雛形作成します
@@ -44,8 +49,8 @@ export default new ApolloClient({
 });
 ```
 
-- 次に実行するQueryやMutationを定義します(まずはQueryだけ)
-    Playgroundの左側のフィールドに入力していた内容を定義するようなイメージです
+- 次に、実行するQueryやMutationを定義します(まずはQueryだけ)
+    - Playgroundの左側のフィールドに入力していた内容を定義するようなイメージです
     - `src/graphql/schema.js`を作成して以下の内容を記述してください
 
 ```js
@@ -73,7 +78,7 @@ export const GET_TEAMS = gql`
     - `useQuery`が実行されるとQueryが実行されます(=サーバへのアクセスが走る)
         - 実行中はloadingがtrue, 完了するとloadingがfalseになり結果に応じてdataとerrorに値が入ります
         - loadingやdataなどの値が変化すると自動的にTeams関数が再実行されるので非常に便利です
-
+    - `data`の構造はconsoleに出力するようにしてるのでDevtoolsから確認してみてください
 
 ```jsx
 import React from 'react';
@@ -261,17 +266,15 @@ export default App;
 - ブラウザにアクセスして動作確認してみます
 - うまくいっていれば以下のような画面が出ているはずです
 ![form](/images/3-10.png)
-
 - フォームに値を入力して作成してみてください
 ![post](/images/3-11.png)
-
 - リロードすると一覧に反映されているはずです！
 ![teams](/images/3-12.png)
 
 ## 更新ボタンの追加
 
 - 画面をリロードしないと更新を確認できないのはいけてないので更新ボタンを作ります
-    - GraphQLのSubscribeという機能を使うと自動更新できますが資料作成間に合わず・・・いつかアップデートします
+    - GraphQLのSubscriptionという機能を使うと自動更新できますが資料作成間に合わず・・・いつかアップデートします
 - `src/components/Teams.js`に更新ボタンの追加します
     - useQueryから`refetch`というQueryを再実行する関数がとれるのでそれを活用します
 

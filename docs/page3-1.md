@@ -5,7 +5,9 @@
 
 ## ゴール
 
-- ApolloServerで作ったGraphQLサーバに対して、ApolloClientで作ったWebアプリでアクセスし、データの取得ができること
+- ApolloServerを使ってGraphQLサーバを作る
+- Playgroundを使ったApolloServerの開発の流れをつかむ
+- ApolloClientとReactを使ってGraphQLクライアントを作る
 
 ## 登場するライブラリ
 
