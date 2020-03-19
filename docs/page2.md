@@ -69,7 +69,7 @@
 - QueryやMutationが実行された時にどのような処理をするのかの定義したもの
     - 処理の中ではビジネスロジックを実行したりDBアクセスを行うことになる
     - 使用するプログラミング言語やライブラリのお作法にのっとって書くことになる
-- SchemaのQuery/Mutationと対になるように定義する
+- Schemaに定義したQuery/Mutationと対になるように定義する
 ![resolver](/images/2-6.png)
 
 
