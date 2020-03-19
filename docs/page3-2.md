@@ -224,7 +224,6 @@ module.exports = new TeamService();
 
 ```js
 const initPlayers = require('../data/players');
-const teamService = require('./TeamService');
 
 class PlayerService {
   constructor() {
