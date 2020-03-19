@@ -1,38 +1,39 @@
-# GraphQLって何！
+# 事前準備
 
-## GraphQLとは
+## Nodeが入っていること
+    
+- 以下のコマンドでバージョンが表示されること
+- Nodeは現在サポート対象である10以上推奨
 
-- HTTP通信する時のデータ・フォーマットの規約
+```sh
+node -v
+npm -v
+```
 
-### RESTと比べて
+- 入っていなければ公式からダウンロードしてください
+    - [https://nodejs.org/ja/](https://nodejs.org/ja/)
 
-- オーバーフェッチ/アンダーフェッチがない
-    - 必要な情報だけを取得できる
-- エンドポイントが一つ
-    - RESTはエンドポイントがたくさんできてしまう
+## yarnが入っていること
 
-## GraphQLの仕組み
+- 以下のコマンドでバージョンが表示されること
+- npmでもいいですが手順はyarnを使ってます
 
-### Type
+```sh
+yarn -v
+```
 
-- データの型を定義する
+- 入っていなければ以下のコマンドでインストールしてください
 
-### Query/Mutation
+```sh
+npm i -g yarn
+```
 
-- Query
-    - データを取得する時に実行する
-- Mutation
-    - データを操作する時に実行する
+## Gitが使えること
 
-### Schema/Resolver
+- 以下のコマンドでバージョンが表示されること
 
-- Schema
-    - どんなQueryやMutationが実行できるのかの定義
-- Resolver
-    - 各QueryやMutationが実行された時にどのような処理をするのかの定義
+```sh
+git --version
+```
 
-### Response
-
-- data
-- loading
-- error
+- 入ってなくてもなんとかなるのでなければしょうがない
