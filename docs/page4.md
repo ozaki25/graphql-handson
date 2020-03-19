@@ -10,14 +10,19 @@
 
 ## ポケモンAPIのセッティング
 
-- リポジトリをクローンして依存ライブラリをインストールします
+- リポジトリをクローン
     - gitコマンドが使えない人は以下URLから緑色の`Clone or download`を押して`Download ZIP`からZIPをダウンロードしてください
     - [https://github.com/ozaki25/graphql-pokemon](https://github.com/ozaki25/graphql-pokemon)
 
 ```sh
 git clone https://github.com/ozaki25/graphql-pokemon.git
 cd graphql-pokemon
-yarn
+```
+
+- 依存ライブラリのインストール
+
+```sh
+yarn install
 ```
 
 - 起動します
