@@ -1,34 +1,15 @@
-# GraphQLのクライアントとサーバを作ってみよう！
-
-## 概要
-
-- Apolloを使ってGraphQLのクライアントとサーバを作る
-- 手順に沿ってやれば動くものはできるので雰囲気を掴んでもらう
-
-## ゴール
-
-- ApolloServerで作ったGraphQLサーバに対して、ApolloClientで作ったWebアプリでアクセスし、データの取得ができること
-
-## 登場するライブラリ
-
-- ApolloServer
-    - JavaScriptでGraphQLサーバを作れるライブラリ
-    - [https://www.apollographql.com/docs/apollo-server/](https://www.apollographql.com/docs/apollo-server/)
-- ApolloClient
-    - JavaScriptでGraphQLクライアントを作れるライブラリ
-    - Reactなどフレームワークごとにライブラリが用意されている
-    - [https://www.apollographql.com/docs/react/v3.0-beta/](https://www.apollographql.com/docs/react/v3.0-beta/)
-- React
-    - SPAを作るためのJavaScriptのライブラリ
-    - [https://ja.reactjs.org/](https://ja.reactjs.org/)
-
-## GraphQLサーバ
+# GraphQLサーバ
 
 - ApolloServerを使ってGraphQLサーバを作ります
 
-### HelloWorld的なところまで
+## ゴール
 
-#### セットアップ
+- HelloWorldを動かしてApolloServerを動かしかたを知れること
+- 野球チームサンプルを動かしてApolloServerの登場人物の整理ができていること
+
+## HelloWorld的なところまで
+
+### セットアップ
 
 - 任意のディレクトリにプロジェクトを作成します
 
@@ -44,7 +25,7 @@ yarn init -y
 yarn add apollo-server graphql
 ```
 
-#### ファイルの作成
+### ファイルの作成
 
 - エントリーポイントとなるファイルを作成します
 - `apollo-server-sample`内に`index.js`を作成して以下の内容を記述してください
@@ -93,7 +74,7 @@ server.listen().then(({ url }) => {
 });
 ```
 
-#### 動作確認
+### 動作確認
 
 - 以下のコマンドで起動してみましょう
 
@@ -132,11 +113,11 @@ node index.js
     ![query](/images/3-3.png)
 - こうし流れでPlaygroundで動作確認しつつGraphQLサーバを開発していくとよいです
 
-### 選手と球団を返すGraphQLサーバを作ってみる
+## 選手と球団を返すGraphQLサーバを作ってみる
 
 - 次はもう少し複雑なものを作ってみます
 
-#### モックデータのセットアップ
+### モックデータのセットアップ
 
 - 今回はDBなど使用せずモックでごまかします(GraphQLを学ぶ上での本質ではないので)
 - 以下4つのファイルをコピペで作成してください
@@ -266,7 +247,7 @@ class PlayerService {
 module.exports = new PlayerService();
 ```
 
-#### Schemaの作成
+### Schemaの作成
 
 - Bookのサンプルでは`index.js`に全て書いていましたが今回はSchema用のファイルを作成します
 - `src/schema.js`を作成して以下の内容を記述してください
@@ -302,7 +283,7 @@ module.exports = typeDefs;
     - 今回は`Team`の配列を返す`teams`というQueryが定義されています
 - 続いて`Team`と`Player`がどんな型なのかが定義されていてそれぞれどんなフィールドを持つか確認できます
 
-#### Resolverの作成
+### Resolverの作成
 
 - Resolverも専用のファイルを作成します
 - `src/resolver.js`を作成して以下の内容を記述してください
@@ -331,7 +312,7 @@ module.exports = resolver;
 - 今回は`teams`しかないので1つだけ定義しています
     - チームの一覧を取得して所属する選手一覧をセットして返却しています
 
-#### SchemaとResolverを適用する
+### SchemaとResolverを適用する
 
 - ここまで作成したファイルを`index.js`に適用します
 - bookのサンプルは削除して`index.js`を以下の内容に変更してください
@@ -348,7 +329,7 @@ server.listen().then(({ url }) => {
 });
 ```
 
-#### 動作確認
+### 動作確認
 
 - サーバを再度起動して[http://localhost:4000/](http://localhost:4000/)にアクセスしPlaygroundで動作確認してみます
 
@@ -363,7 +344,7 @@ node index.js
 ![teams](/images/3-5.png)
 
 
-#### Mutationを追加する
+### Mutationを追加する
 
 - ここまではデータを取得するQueryだけだったのでデータを操作するMutationを追加しておきます
     - 選手を追加するMutationを追加してみます
@@ -458,243 +439,3 @@ node index.js
 
 - Queryを実行して反映されていることを確認してみましょう
 ![query](/images/3-8.png)
-
-## GraphQLクライアント
-
-- ApolloClientとReactApolloを使います
-
-### コマンドメモ
-
-- 雛形作成
-
-```sh
-create-react-app apollo-client-sample
-cd apollo-client-sample
-```
-
-- ライブラリの追加
-
-```sh
-yarn add @apollo/client graphql
-```
-
-- `src/graphql/client.js`の作成
-
-```js
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-
-export default new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'http://localhost:4000/graphql',
-  }),
-});
-```
-
-- `src/graphql/schema.js`の作成
-
-```js
-import { gql } from '@apollo/client';
-
-export const GET_TEAMS = gql`
-  query Teams {
-    teams {
-      id
-      name
-      foundingDate
-      homeStadium
-      players {
-        no
-        name
-        position
-      }
-    }
-  }
-`;
-```
-
-- `src/components/Teams.js`の作成
-
-```jsx
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_TEAMS } from '../graphql/query';
-
-function Teams() {
-  const { loading, error, data } = useQuery(GET_TEAMS);
-  console.log({ loading, error, data });
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  return (
-    <div>
-      {data.teams.map(team => (
-        <dl>
-          <dt>ID</dt>
-          <dd>{team.id}</dd>
-          <dt>チーム名</dt>
-          <dd>{team.name}</dd>
-          <dt>創設日</dt>
-          <dd>{team.foundingDate}</dd>
-          <dt>ホーム球場</dt>
-          <dd>{team.homeStadium}</dd>
-          <dt>所属選手</dt>
-          <dd>
-            {team.players.map(player => (
-              <dl>
-                <dt>背番号</dt>
-                <dd>{player.no}</dd>
-                <dt>名前</dt>
-                <dd>{player.name}</dd>
-                <dt>守備位置</dt>
-                <dd>{player.position}</dd>
-              </dl>
-            ))}
-          </dd>
-        </dl>
-      ))}
-    </div>
-  );
-}
-
-export default Teams;
-```
-
-- `src/App.js`の修正
-
-```jsx
-import React from 'react';
-import { ApolloProvider } from '@apollo/client';
-
-import client from './graphql/client';
-import Teams from './components/Teams';
-
-function App() {
-  return (
-    <ApolloProvider client={client}>
-      <Teams />
-    </ApolloProvider>
-  );
-}
-
-export default App;
-```
-
-- `src/graphql/schema.js`にmutationを追加
-
-```js
-// 省略
-
-export const ADD_PLAYER = gql`
-  mutation AddPlayer(
-    $name: String!
-    $no: String!
-    $position: String!
-    $teamId: String!
-  ) {
-    addPlayer(name: $name, no: $no, position: $position, teamId: $teamId) {
-      id
-      no
-      name
-      position
-    }
-  }
-`;
-```
-
-- `src/components/AddPlayer.js`の追加
-
-```jsx
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { ADD_PLAYER } from '../graphql/schema';
-
-function AddPlayer() {
-  const [form, setForm] = useState({});
-  const [addPlayer, { data }] = useMutation(ADD_PLAYER);
-  console.log({ data });
-
-  const onChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    addPlayer({ variables: form });
-  };
-
-  return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="name">
-        名前 <input name="name" id="name" onChange={onChange} />
-      </label>
-      <label htmlFor="no">
-        背番号
-        <input name="no" id="no" onChange={onChange} />
-      </label>
-      <label htmlFor="position">
-        守備位置
-        <input name="position" id="position" onChange={onChange} />
-      </label>
-      <label htmlFor="teamId">
-        チームID
-        <input name="teamId" id="teamId" onChange={onChange} />
-      </label>
-      <button>作成</button>
-    </form>
-  );
-}
-
-export default AddPlayer;
-```
-
-- `src/App.js`にAddPlayerを適用
-
-```jsx
-import React from 'react';
-import { ApolloProvider } from '@apollo/client';
-
-import client from './graphql/client';
-import Teams from './components/Teams';
-import AddPlayer from './components/AddPlayer';
-
-function App() {
-  return (
-    <ApolloProvider client={client}>
-      <AddPlayer />
-      <Teams />
-    </ApolloProvider>
-  );
-}
-
-export default App;
-```
-
-- `src/components/Teams.js`に更新ボタンの追加
-
-```jsx
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_TEAMS } from '../graphql/schema';
-
-function Teams() {
-  // ↓refetchを追加
-  const { loading, error, data, refetch } = useQuery(GET_TEAMS);
-  console.log({ loading, error, data });
-
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
-
-  return (
-    <div>
-      {/* ↓ボタンを追加 */}
-      <button onClick={() => refetch()}>更新</button>
-      {/* 省略 */}
-    </div>
-  );
-}
-
-export default Teams;
-```
-
