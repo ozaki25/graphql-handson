@@ -17,6 +17,8 @@ module.exports = {
   },
   plugins: {
     '@vuepress/back-to-top': {},
-    'seo': {},
+    'seo': {
+      description: () => 'ハンズオン資料',
+    },
   },
 };
