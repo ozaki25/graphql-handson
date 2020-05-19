@@ -1,6 +1,7 @@
 module.exports = {
   title: 'GraphQL Handson',
   themeConfig: {
+    domain: 'https://graphql-handson.ozaki25.now.sh',
     sidebar: [
       '/page1',
       '/page2',
@@ -10,5 +11,12 @@ module.exports = {
       },
       '/page4',
     ],
+  },
+  markdown: {
+    lineNumbers: true,
+  },
+  plugins: {
+    '@vuepress/back-to-top': {},
+    'seo': {},
   },
 };
