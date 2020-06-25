@@ -1,3 +1,5 @@
+const dayjs = require('dayjs');
+
 module.exports = {
   title: 'GraphQL Handson',
   themeConfig: {
@@ -16,8 +18,14 @@ module.exports = {
     lineNumbers: true,
   },
   plugins: {
+    '@vuepress/last-updated': {
+      transformer: (timestamp, lang) => {
+        return dayjs(timestamp).format('YYYY/MM/DD');
+      },
+    },
+    '@vuepress/medium-zoom': {},
     '@vuepress/back-to-top': {},
-    'seo': {
+    seo: {
       description: () => 'ハンズオン資料',
     },
   },

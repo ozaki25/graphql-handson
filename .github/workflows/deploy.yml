@@ -1,0 +1,27 @@
+name: deploy website
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: install
+        run: |
+          yarn install
+      - name: build
+        run: |
+          yarn build
+      - name: deploy
+        run: |
+          npx vc ./public --confirm --prod -t $VERCEL_TOKEN
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
