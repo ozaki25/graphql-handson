@@ -4,6 +4,8 @@ module.exports = {
   title: 'GraphQL Handson',
   themeConfig: {
     domain: 'https://graphql-handson.ozaki25.now.sh',
+    repo: 'ozaki25/graphql-handson',
+    repoLabel: 'GitHub',
     sidebar: [
       '/page1',
       '/page2',
